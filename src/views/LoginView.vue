@@ -1,19 +1,79 @@
+
 <template>
-  <div>
-    <h2>Login</h2>
-    <form @submit.prevent="login">
-      <input v-model="email" placeholder="Email" type="email" required />
-      <input v-model="password" placeholder="Password" type="password" required />
-      <button type="submit" :disabled="loading">Login</button>
-    </form>
-    <p v-if="error" class="error">{{ error }}</p>
+  <div class="loginScreen">
+    <div class="signIn">
+      <h1>Login</h1>
+      <FloatLabel variant="on">
+        <InputText id="username" v-model="userName" />
+        <label for="username">Username or Email</label>
+      </FloatLabel>
+      <br>
+      <FloatLabel variant="on">
+          <Password v-model="passWord" inputId="password" toggleMask />
+          <label for="password">Password</label>
+      </FloatLabel>
+      <p>Dont have account? <a href="signup">SignUp</a></p>
+      <Button type="submit" severity="secondary" label="Login" />
+    </div>
   </div>
 </template>
 
+<script setup>
+import { ref } from 'vue';
+import Password from 'primevue/password';
+import FloatLabel from 'primevue/floatlabel';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+const userName = ref(null);
+const passWord = ref(null);
+
+
+
+
+</script>
+<style scoped>
+.loginScreen{
+  background-image: url('https://cdn.pixabay.com/photo/2015/12/06/20/10/christmas-bauble-1079926_640.jpg');
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 100vh;
+}
+.signIn{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.795);
+  height: 50%;
+  width: 20%;
+  border-radius: 50px;
+}
+h1{
+  font-size: 60px;
+  margin-bottom: 15%;
+}
+#username{
+  width: 261px;
+}
+p{
+  margin-top: 10%;
+  font-size: 20px;
+}
+a{
+  text-decoration: none;
+}
+button{
+  margin-bottom: 20%;
+}
+</style>
+<!-- 
+
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import Password from 'primevue/password';
+
 
 export default defineComponent({
   setup() {
@@ -21,8 +81,6 @@ export default defineComponent({
     const password = ref('')
     const loading = ref(false)
     const error = ref('')
-    const store = useStore()
-    const router = useRouter()
 
     const login = async () => {
       loading.value = true
@@ -36,12 +94,6 @@ export default defineComponent({
         })
         const data = await response.json()
 
-        if (data.token) {
-          store.dispatch('login', data.token)
-          router.push('/dashboard')
-        } else {
-          error.value = 'Invalid credentials or server error.'
-        }
       } catch (err) {
         error.value = 'An error occurred. Please try again.'
       } finally {
@@ -66,4 +118,4 @@ export default defineComponent({
   font-size: 1rem;
   margin-top: 1rem;
 }
-</style>
+</style> -->
