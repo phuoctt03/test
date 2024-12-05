@@ -13,7 +13,7 @@
           <label for="password">Password</label>
       </FloatLabel>
       <p>Dont have account? <a href="signup">SignUp</a></p>
-      <Button type="submit" severity="secondary" label="Login" />
+      <Button type="submit" v-on:click="Login()" severity="secondary" label="Login" />
     </div>
   </div>
 </template>
@@ -27,8 +27,10 @@ import Button from 'primevue/button';
 const userName = ref(null);
 const passWord = ref(null);
 
-
-
+const Login = () => {
+  console.log(userName)
+  console.log(passWord)
+}
 
 </script>
 <style scoped>
@@ -68,54 +70,3 @@ button{
   margin-bottom: 20%;
 }
 </style>
-<!-- 
-
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
-import Password from 'primevue/password';
-
-
-export default defineComponent({
-  setup() {
-    const email = ref('')
-    const password = ref('')
-    const loading = ref(false)
-    const error = ref('')
-
-    const login = async () => {
-      loading.value = true
-      error.value = '' // Clear any previous errors
-
-      try {
-        const response = await fetch('/api/login', {
-          method: 'POST',
-          body: JSON.stringify({ email: email.value, password: password.value }),
-          headers: { 'Content-Type': 'application/json' }
-        })
-        const data = await response.json()
-
-      } catch (err) {
-        error.value = 'An error occurred. Please try again.'
-      } finally {
-        loading.value = false
-      }
-    }
-
-    return {
-      email,
-      password,
-      login,
-      loading,
-      error
-    }
-  }
-})
-</script>
-
-<style scoped>
-.error {
-  color: red;
-  font-size: 1rem;
-  margin-top: 1rem;
-}
-</style> -->

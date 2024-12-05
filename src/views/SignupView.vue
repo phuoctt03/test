@@ -23,7 +23,7 @@
           <label for="email">Email</label>
         </FloatLabel>
         <p>Have account? <a href="login">Login</a></p>
-        <Button type="submit" severity="secondary" label="SignUp" />
+        <Button type="submit" v-on:click="SignUp()" severity="secondary" label="SignUp" />
       </div>
     </div>
 </template>
@@ -34,11 +34,35 @@ import Password from 'primevue/password';
 import FloatLabel from 'primevue/floatlabel';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import axios from 'axios';
 const userName = ref(null);
 const passWord = ref(null);
+const confirmPassword = ref(null);
+const email = ref(null);
 
-
-
+const SignUp = async () => {
+    console.log(userName.value)
+    console.log(passWord.value)
+    console.log(confirmPassword.value)
+    console.log(email.value)
+    if (passWord.value !== confirmPassword.value) {
+        alert('Password Not Matched')
+    }
+    const response = await axios.get('http://localhost:3000/users', {
+        userName: userName.value,
+        passWord: passWord.value,
+        email: email.value
+    });
+    try {
+      if( response.status === 200){
+        alert('User Created Successfully')
+        window.location.href = '/login'
+      }
+      alert('User Creation Failed')
+    } catch (error) {
+      alert('Something Went Wrong')
+    }
+}
 
 </script>
 <style scoped>
