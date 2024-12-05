@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import BookingView from '../views/BookingView.vue'
+import HotelView from '../views/HotelView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -28,6 +29,11 @@ const router = createRouter({
       component: BookingView,
       meta: { requiresAuth: true }
     },
+    {
+      path: '/hotel',
+      name: 'hotel',
+      component: HotelView,
+    }
   ],
 })
 

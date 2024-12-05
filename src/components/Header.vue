@@ -10,7 +10,6 @@
           <li><a href="Promo">Phiếu giảm giá và ưu đãi</a></li>
           <li><a href="SignIn" class="SignIn">Đăng nhập</a></li>
           <li><a href="SignUp" class="SignUp">Tạo tài khoản</a></li>
-          <li><a href="Cart" class="Cart">🛒</a></li>
         </ul>
       </nav>
     </header>
@@ -24,7 +23,8 @@
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 100%;
+    width: auto;
+    width: calc(100% - 40px);
     z-index: 1;
   }
   nav {
@@ -47,6 +47,24 @@
   a:hover {
     color: rgb(42, 159, 255);
     background-color: none;
+  }
+  .SignIn {
+    background-color: rgb(42, 159, 255);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  .SignIn:hover {
+    color: rgb(0, 0, 0);
+  }
+  .SignUp {
+    background-color: rgb(42, 159, 255);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  .SignUp:hover {
+    color: rgb(0, 0, 0);
   }
   </style>
   

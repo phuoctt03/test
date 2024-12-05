@@ -10,8 +10,6 @@
     text-align: center;
     padding: 10px 0;
     border-top: 1px solid #ddd;
-    position: absolute;
-    left: 0;
     width: 100%;
   }
   </style>
