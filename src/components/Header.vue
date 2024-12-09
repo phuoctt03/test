@@ -8,7 +8,7 @@
           <li><a href="Hotel">Khách sạn</a></li>
           <li><a href="Activity">Hoạt động</a></li>
           <li><a href="Promo">Phiếu giảm giá và ưu đãi</a></li>
-          <li><a href="SignIn" class="SignIn">Đăng nhập</a></li>
+          <li><a href="login" class="SignIn">Đăng nhập</a></li>
           <li><a href="SignUp" class="SignUp">Tạo tài khoản</a></li>
         </ul>
       </nav>
@@ -24,7 +24,7 @@
     top: 0px;
     left: 0px;
     width: auto;
-    width: calc(100% - 40px);
+    width: 100%;
     z-index: 1;
   }
   nav {
