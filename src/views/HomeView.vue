@@ -1,293 +1,597 @@
 <template>
-  <Header />
-  <img alt="Background Home" src="https://cdn6.agoda.net/images/MVC/default/background_image/illustrations/bg-agoda-homepage.png" />
-  <div class="container">
-    <h1>RONG CHƠI BỐN PHƯƠNG, GIÁ VẪN "YÊU THƯƠNG"</h1>
-  </div>
-  <div class="nav1">
-    <ul>
-      <li><a href="#Flight">🛫 Máy bay</a></li>
-      <li><a href="#Hotel">🏨 Khách sạn</a></li>
-      <li><a href="#Activity">🎢 Hoạt động</a></li>
-      <li><a href="#Combo">🛫🏨🎢 Combo</a></li>
-    </ul>
-  </div>
-  <div class="nav2">
-    <div class="line1">
-      <div>Chỗ Ở Qua Đêm</div>
-      <div>Chỗ Ở Trong Ngày</div>
-    </div>
-    <span>🔍</span><input v-model="searchQuery" placeholder="Nhập điểm du lịch hoặc tên khách sạn" />
-    <button @click="search" class="search">Tìm</button>
-    <div class="line2">
-      <DatePicker
-        id="datePicker"
-        v-model="dates"
-        selectionMode="range"
-        :minDate="minDate"
-        :manualInput="false"
-        dateFormat="dd/mm/yy"
-        placeholder="Chọn khoảng thời gian đặt phòng"
-      />
-      <FloatLabel variant="on" id="inputPerson">
-        <InputNumber v-model="person" id="person" :useGrouping="false" fluid/>
-        <label for="person">Số người</label>
-      </FloatLabel>
-    </div>
-  </div>
-  <body>
-    <div class="attractive-destination">
-      <h2>Các điểm đến thu hút nhất Việt Nam</h2>
-      <Carousel :value="destinations" :numVisible="4" :numScroll="1" :responsiveOptions="responsiveOptions" circular :autoplayInterval="3000">
-        <template #item="slotProps">
-          <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4" style="height: 210px; align-items: center; display: flex;">
-            <div class="mb-4">
-              <div class="relative-mx-auto">
-                <img :src="slotProps.data.image" :alt="slotProps.data.name" class="w-full-rounded" />
-              </div>
+  <div id="app" class="p-4">
+    <h1 class="text-4xl font-bold mb-6">PrimeVue Component Showcase</h1>
+    <TabView>
+      <TabPanel header="Form Components">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <ShowcaseItem title="InputText">
+            <InputText v-model="inputTextValue" placeholder="Enter text" />
+          </ShowcaseItem>
+          <ShowcaseItem title="AutoComplete">
+            <AutoComplete 
+              v-model="autocompleteValue" 
+              :suggestions="filteredCities" 
+              field="name" 
+              placeholder="Select a city" 
+            />
+          </ShowcaseItem>
+          <ShowcaseItem title="InputNumber">
+            <InputNumber v-model="inputNumberValue" />
+          </ShowcaseItem>
+          <ShowcaseItem title="InputMask">
+            <InputMask v-model="inputMaskValue" mask="99-999999" placeholder="99-999999" />
+          </ShowcaseItem>
+          <ShowcaseItem title="Checkbox">
+            <Checkbox v-model="checkboxValue" :binary="true" />
+          </ShowcaseItem>
+          <ShowcaseItem title="RadioButton">
+            <RadioButton v-model="radioValue" value="Option 1" /> Option 1
+            <RadioButton v-model="radioValue" value="Option 2" /> Option 2
+          </ShowcaseItem>
+          <ShowcaseItem title="Dropdown">
+            <Dropdown v-model="dropdownValue" :options="dropdownOptions" optionLabel="name" placeholder="Select a City" />
+          </ShowcaseItem>
+          <ShowcaseItem title="MultiSelect">
+            <MultiSelect v-model="multiSelectValue" :options="dropdownOptions" optionLabel="name" placeholder="Select Cities" />
+          </ShowcaseItem>
+          <ShowcaseItem title="Textarea">
+            <Textarea v-model="textareaValue" rows="3" cols="30" />
+          </ShowcaseItem>
+          <ShowcaseItem title="Calendar">
+            <Calendar 
+              v-model="calendarValue" 
+              dateFormat="dd/mm/yy" 
+              :showIcon="false" 
+              :mask="true" 
+              placeholder="DD/MM/YYYY" 
+            />
+          </ShowcaseItem>
+
+          <ShowcaseItem title="Chips">
+            <Chips v-model="chipsValue" />
+          </ShowcaseItem>
+          <ShowcaseItem title="Chip">
+            <Chip label="Technology" icon="pi pi-tag" />
+          </ShowcaseItem>
+          <ShowcaseItem title="InputGroup">
+            <InputGroup>
+              <InputText v-model="inputTextValue" />
+              <Button label="Search" icon="pi pi-search" />
+            </InputGroup>
+          </ShowcaseItem>
+          <ShowcaseItem title="Slider">
+            <Slider v-model="sliderValue" />
+          </ShowcaseItem>
+          <ShowcaseItem title="Rating">
+            <Rating v-model="ratingValue" />
+          </ShowcaseItem>
+          <ShowcaseItem title="ColorPicker">
+            <ColorPicker v-model="colorValue" />
+          </ShowcaseItem>
+          <ShowcaseItem title="ToggleButton">
+            <ToggleButton v-model="toggleValue" onLabel="On" offLabel="Off" />
+          </ShowcaseItem>
+          <ShowcaseItem title="SelectButton">
+            <SelectButton v-model="selectButtonValue" :options="selectButtonOptions" optionLabel="name" />
+          </ShowcaseItem>
+          <ShowcaseItem title="Breadcrumb">
+            <Breadcrumb :model="breadcrumbItems" />
+          </ShowcaseItem>
+          <ShowcaseItem title="InputSwitch">
+            <InputSwitch v-model="switchValue" />
+          </ShowcaseItem>
+        </div>
+      </TabPanel>
+
+      <TabPanel header="Button Components">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <ShowcaseItem title="Button">
+            <Button label="Click me" icon="pi pi-check" />
+          </ShowcaseItem>
+          <ShowcaseItem title="SplitButton">
+            <SplitButton label="Save" icon="pi pi-check" :model="splitButtonItems" />
+          </ShowcaseItem>
+          <ShowcaseItem title="SpeedDial">
+            <SpeedDial :model="speedDialItems" />
+          </ShowcaseItem>
+          <ShowcaseItem title="Timeline">
+            <Timeline :value="timelineData" />
+          </ShowcaseItem>
+        </div>
+      </TabPanel>
+
+      <TabPanel header="Data Components">
+        <div class="grid grid-cols-1 gap-4">
+          <ShowcaseItem title="DataTable">
+            <DataTable :value="tableData" :paginator="true" :rows="5">
+              <Column field="id" header="ID"></Column>
+              <Column field="name" header="Name"></Column>
+              <Column field="category" header="Category"></Column>
+              <Column field="quantity" header="Quantity"></Column>
+            </DataTable>
+          </ShowcaseItem>
+          <ShowcaseItem title="Tree">
+            <Tree :value="treeNodes" />
+          </ShowcaseItem>
+          <ShowcaseItem title="TreeTable">
+            <TreeTable :value="treeTableNodes" :paginator="true" :rows="5">
+              <Column field="name" header="Name" expander></Column>
+              <Column field="size" header="Size"></Column>
+              <Column field="type" header="Type"></Column>
+            </TreeTable>
+          </ShowcaseItem>
+        </div>
+      </TabPanel>
+
+      <TabPanel header="Panel Components">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ShowcaseItem title="Accordion">
+            <Accordion :activeIndex="0">
+              <AccordionTab header="Header I">Content I</AccordionTab>
+              <AccordionTab header="Header II">Content II</AccordionTab>
+              <AccordionTab header="Header III">Content III</AccordionTab>
+            </Accordion>
+          </ShowcaseItem>
+          <ShowcaseItem title="Card">
+            <Card>
+              <template #title>Card Title</template>
+              <template #content>Card content</template>
+              <template #footer>Card footer</template>
+            </Card>
+          </ShowcaseItem>
+          <ShowcaseItem title="Panel">
+            <Panel header="Panel Title">Panel content</Panel>
+          </ShowcaseItem>
+          <ShowcaseItem title="Fieldset">
+            <Fieldset legend="Fieldset Legend">Fieldset content</Fieldset>
+          </ShowcaseItem>
+        </div>
+      </TabPanel>
+
+      <TabPanel header="Overlay Components">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <ShowcaseItem title="Dialog">
+            <Button label="Show Dialog" icon="pi pi-external-link" @click="showDialog" />
+            <Dialog v-model:visible="dialogVisible" modal header="Dialog Header" :style="{ width: '50vw' }">
+              <p>This is a sample dialog content.</p>
+            </Dialog>
+          </ShowcaseItem>
+          <ShowcaseItem title="OverlayPanel">
+            <Button type="button" label="Toggle" @click="toggle" />
+            <OverlayPanel ref="op">
+              <p>Overlay panel content</p>
+            </OverlayPanel>
+          </ShowcaseItem>
+          <ShowcaseItem title="Sidebar">
+            <Button icon="pi pi-arrow-right" @click="visibleSidebar = true" />
+            <Sidebar v-model:visible="visibleSidebar">
+              <h3>Sidebar</h3>
+              <p>This is the sidebar content.</p>
+            </Sidebar>
+          </ShowcaseItem>
+        </div>
+      </TabPanel>
+
+      <TabPanel header="Menu Components">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ShowcaseItem title="Menu">
+            <Menu :model="menuItems" />
+          </ShowcaseItem>
+          <ShowcaseItem title="Menubar">
+            <Menubar :model="menubarItems" />
+          </ShowcaseItem>
+          <ShowcaseItem title="TieredMenu">
+            <TieredMenu :model="tieredMenuItems" />
+          </ShowcaseItem>
+          <ShowcaseItem title="ContextMenu">
+            <ContextMenu :model="contextMenuItems" ref="cm" />
+            <div @contextmenu="onContextMenu" class="w-full h-24 bg-gray-200 flex items-center justify-center">
+              Right-click here to open context menu
             </div>
-          </div>
-          <div class="text" style="position: relative; align-items: center; justify-content: center; display: grid;">
-            <div class="mb-4 font-medium text-lg" style="font-size: 20px;font-weight: 700; margin: auto;">{{ slotProps.data.name }}</div>
-            <div class="font-semibold text-xl">{{ slotProps.data.rooms }} chỗ ở</div>
-          </div>
-        </template>
-      </Carousel>
-    </div>
-    <div class="promo-hotel">
-      <h2>Chương trình khuyến mại chỗ ở</h2>
-      <Carousel :value="destinations" :numVisible="3" :numScroll="1" :responsiveOptions="responsiveOptions" circular :autoplayInterval="3000">
-        <template #item="slotProps">
-          <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4" style="height: 210px; align-items: center; display: flex;">
-            <div class="mb-4">
-              <div class="relative-mx-auto">
-                <img :src="slotProps.data.image" :alt="slotProps.data.name" class="w-full-rounded" />
-              </div>
-            </div>
-          </div>
-        </template>
-      </Carousel>
-    </div>
-  </body>
-  <Footer />
+          </ShowcaseItem>
+        </div>
+      </TabPanel>
+
+      <TabPanel header="Chart Components">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ShowcaseItem title="Chart">
+            <Chart type="bar" :data="chartData" :options="chartOptions" />
+          </ShowcaseItem>
+          <ShowcaseItem title="Dock">
+            <Dock :model="dockItems" :position="position">
+              <template #itemicon="{ item }">
+                <img v-tooltip.top="item.label" :alt="item.label" :src="item.icon" style="width: 100%" />
+              </template>
+            </Dock>
+          </ShowcaseItem>
+        </div>
+      </TabPanel>
+
+      <TabPanel header="Messages">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <ShowcaseItem title="Message">
+            <Message severity="info" text="Info Message" />
+            <Message severity="success" text="Success Message" />
+            <Message severity="warn" text="Warning Message" />
+            <Message severity="error" text="Error Message" />
+          </ShowcaseItem>
+          <ShowcaseItem title="Toast">
+            <Button label="Show Toast" icon="pi pi-check" @click="showToast" />
+            <Toast />
+          </ShowcaseItem>
+          <ShowcaseItem title="InlineMessage">
+            <InlineMessage severity="error" text="This is an error message." />
+          </ShowcaseItem>
+        </div>
+      </TabPanel>
+
+      <TabPanel header="Media Components">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ShowcaseItem title="Carousel">
+            <Carousel :value="carouselItems" :numVisible="1" :numScroll="1">
+              <template #item="slotProps">
+                <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+                  <div class="mb-3">
+                    <img :src="slotProps.data.image" :alt="slotProps.data.name" class="w-6 shadow-2" />
+                  </div>
+                  <div>
+                    <h4 class="mb-1">{{ slotProps.data.name }}</h4>
+                    <h6 class="mt-0 mb-3">{{ slotProps.data.price }}</h6>
+                  </div>
+                </div>
+              </template>
+            </Carousel>
+          </ShowcaseItem>
+          <ShowcaseItem title="Galleria">
+            <Galleria :value="galleriaItems" :responsiveOptions="galleriaResponsiveOptions" :numVisible="5" containerStyle="max-width: 640px">
+              <template #item="slotProps">
+                <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt" style="width: 100%; display: block;" />
+              </template>
+              <template #thumbnail="slotProps">
+                <img :src="slotProps.item.thumbnailImageSrc" :alt="slotProps.item.alt" style="width: 100%; display: block;" />
+              </template>
+            </Galleria>
+          </ShowcaseItem>
+        </div>
+      </TabPanel>
+    </TabView>
+  </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue';
-import Header from '@/components/Header.vue';
-import Footer from '@/components/Footer.vue';
-import {DatePicker} from 'primevue';
-import {FloatLabel} from 'primevue';
-import {InputNumber} from 'primevue';
-import {Carousel} from 'primevue';
+<script>
+import { ref } from 'vue'
+import { useToast } from 'primevue/usetoast'
 
+export default {
+  setup() {
+    const toast = useToast()
 
-const searchQuery = ref('');
-const person = ref(null);
-const dates = ref(null);
-const now = new Date();
-const minDate = ref(new Date(now.getFullYear(), now.getMonth(), now.getDate()));
-const search = () => {
-  console.log(searchQuery.value);
-  console.log(dates.value);
-  console.log(person.value);
+    // Form Components
+    const inputTextValue = ref('')
+    const inputNumberValue = ref(0)
+    const inputMaskValue = ref('')
+    const checkboxValue = ref(false)
+    const radioValue = ref(null)
+    const dropdownValue = ref(null)
+    const multiSelectValue = ref(null)
+    const textareaValue = ref('')
+    const calendarValue = ref(null)
+    const sliderValue = ref(50)
+    const ratingValue = ref(null)
+    const colorValue = ref('1976D2')
+    const toggleValue = ref(false)
+    const selectButtonValue = ref(null)
+
+    const dropdownOptions = [
+      { name: 'New York', code: 'NY' },
+      { name: 'Rome', code: 'RM' },
+      { name: 'London', code: 'LDN' },
+      { name: 'Istanbul', code: 'IST' },
+      { name: 'Paris', code: 'PRS' }
+    ]
+
+    const selectButtonOptions = [
+      { name: 'Option 1', code: 'O1' },
+      { name: 'Option 2', code: 'O2' },
+      { name: 'Option 3', code: 'O3' },
+    ]
+
+    // Button Components
+    const splitButtonItems = [
+      { label: 'Update', icon: 'pi pi-refresh' },
+      { label: 'Delete', icon: 'pi pi-times' },
+      { label: 'Home', icon: 'pi pi-home' }
+    ]
+
+    const speedDialItems = [
+      { label: 'Add', icon: 'pi pi-pencil' },
+      { label: 'Update', icon: 'pi pi-refresh' },
+      { label: 'Delete', icon: 'pi pi-trash' },
+      { label: 'Upload', icon: 'pi pi-upload' },
+    ]
+
+    // Data Components
+    const tableData = [
+      { id: 1, name: 'Product A', category: 'Electronics', quantity: 10 },
+      { id: 2, name: 'Product B', category: 'Clothing', quantity: 20 },
+      { id: 3, name: 'Product C', category: 'Electronics', quantity: 15 },
+      { id: 4, name: 'Product D', category: 'Food', quantity: 50 },
+      { id: 5, name: 'Product E', category: 'Clothing', quantity: 25 },
+    ]
+
+    const treeNodes = [
+      {
+        key: '0',
+        label: 'Documents',
+        children: [
+          { key: '0-0', label: 'Work' },
+          { key: '0-1', label: 'Home' },
+        ],
+      },
+      {
+        key: '1',
+        label: 'Events',
+        children: [
+          { key: '1-0', label: 'Meeting' },
+          { key: '1-1', label: 'Party' },
+        ],
+      },
+    ]
+
+    const treeTableNodes = [
+      {
+        key: '0',
+        data: { name: 'Documents', size: '75kb', type: 'Folder' },
+        children: [
+          { key: '0-0', data: { name: 'Work', size: '55kb', type: 'Folder' } },
+          { key: '0-1', data: { name: 'Home', size: '20kb', type: 'Folder' } },
+        ],
+      },
+      {
+        key: '1',
+        data: { name: 'Events', size: '100kb', type: 'Folder' },
+        children: [
+          { key: '1-0', data: { name: 'Meeting', size: '50kb', type: 'Folder' } },
+          { key: '1-1', data: { name: 'Party', size: '50kb', type: 'Folder' } },
+        ],
+      },
+    ]
+
+    // Overlay Components
+    const dialogVisible = ref(false)
+    const visibleSidebar = ref(false)
+
+    const showDialog = () => {
+      dialogVisible.value = true
+    }
+
+    const toggle = (event) => {
+      this.$refs.op.toggle(event)
+    }
+
+    // Menu Components
+    const menuItems = [
+      { label: 'New', icon: 'pi pi-fw pi-plus' },
+      { label: 'Open', icon: 'pi pi-fw pi-download' },
+      { label: 'Save', icon: 'pi pi-fw pi-save' }
+    ]
+
+    const menubarItems = [
+      {
+        label: 'File',
+        items: [
+          { label: 'New', icon: 'pi pi-fw pi-plus' },
+          { label: 'Open', icon: 'pi pi-fw pi-download' },
+          { label: 'Save', icon: 'pi pi-fw pi-save' }
+        ]
+      },
+      {
+        label: 'Edit',
+        items: [
+          { label: 'Cut', icon: 'pi pi-fw pi-cut' },
+          { label: 'Copy', icon: 'pi pi-fw pi-copy' },
+          { label: 'Paste', icon: 'pi pi-fw pi-paste' }
+        ]
+      }
+    ]
+
+    const tieredMenuItems = [
+      {
+        label: 'File',
+        icon: 'pi pi-fw pi-file',
+        items: [
+          {
+            label: 'New',
+            icon: 'pi pi-fw pi-plus',
+            items: [
+              { label: 'Document', icon: 'pi pi-fw pi-file' },
+              { label: 'Image', icon: 'pi pi-fw pi-image' }
+            ]
+          },
+          { label: 'Open', icon: 'pi pi-fw pi-external-link' },
+          { separator: true },
+          { label: 'Quit', icon: 'pi pi-fw pi-times' }
+        ]
+      },
+      {
+        label: 'Edit',
+        icon: 'pi pi-fw pi-pencil',
+        items: [
+          { label: 'Cut', icon: 'pi pi-fw pi-cut' },
+          { label: 'Copy', icon: 'pi pi-fw pi-copy' },
+          { label: 'Paste', icon: 'pi pi-fw pi-paste' }
+        ]
+      }
+    ]
+
+    const contextMenuItems = [
+      { label: 'View', icon: 'pi pi-fw pi-search' },
+      { label: 'Delete', icon: 'pi pi-fw pi-trash' }
+    ]
+
+    const onContextMenu = (event) => {
+      this.$refs.cm.show(event)
+    }
+
+    // Chart Components
+    const chartData = {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      datasets: [
+        {
+          label: 'Sales',
+          data: [12, 19, 3, 5, 2, 3, 9],
+          backgroundColor: '#42A5F5',
+        },
+      ],
+    }
+
+    const chartOptions = {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    }
+
+    // Messages
+    const showToast = () => {
+      toast.add({ severity: 'info', summary: 'Info Message', detail: 'Message Content', life: 3000 })
+    }
+
+    // Media Components
+    const carouselItems = [
+      { name: 'Product 1', price: '$50', image: 'https://via.placeholder.com/150' },
+      { name: 'Product 2', price: '$80', image: 'https://via.placeholder.com/150' },
+      { name: 'Product 3', price: '$70', image: 'https://via.placeholder.com/150' },
+    ]
+
+    const galleriaItems = [
+      { itemImageSrc: 'https://via.placeholder.com/640x480', thumbnailImageSrc: 'https://via.placeholder.com/150', alt: 'Image 1' },
+      { itemImageSrc: 'https://via.placeholder.com/640x480', thumbnailImageSrc: 'https://via.placeholder.com/150', alt: 'Image 2' },
+      { itemImageSrc: 'https://via.placeholder.com/640x480', thumbnailImageSrc: 'https://via.placeholder.com/150', alt: 'Image 3' },
+    ]
+
+    const galleriaResponsiveOptions = [
+      {
+        breakpoint: '991px',
+        numVisible: 4
+      },
+      {
+        breakpoint: '767px',
+        numVisible: 3
+      },
+      {
+        breakpoint: '575px',
+        numVisible: 1
+      }
+    ]
+    
+    const filteredCities = ref([
+      { name: 'New York' },
+      { name: 'Los Angeles' },
+      { name: 'Chicago' },
+      { name: 'Houston' },
+      { name: 'Phoenix' }
+    ]);
+
+    const timelineData = ref([
+  {
+    date: '2024-01-01',
+    title: 'New Year Celebration',
+    content: 'Celebrated the New Year with family and friends.'
+  },
+  {
+    date: '2024-02-14',
+    title: 'Valentine’s Day',
+    content: 'Went on a lovely date with my partner.'
+  },
+  {
+    date: '2024-03-17',
+    title: 'St. Patrick’s Day',
+    content: 'Attended a parade and enjoyed the festive atmosphere.'
+  },
+  {
+    date: '2024-07-04',
+    title: 'Independence Day',
+    content: 'Watched fireworks and celebrated with a BBQ party.'
+  }
+]);
+const breadcrumbItems = ref([
+  { label: 'Home', url: '/' },
+  { label: 'Category', url: '/category' },
+  { label: 'Product', url: '/category/product' }
+]);
+const dockItems = ref([
+  {
+    label: 'Finder',
+    icon: 'https://primefaces.org/cdn/primereact/images/dock/finder.svg',
+    command: () => console.log('Finder clicked')
+  },
+  {
+    label: 'App Store',
+    icon: 'https://primefaces.org/cdn/primereact/images/dock/appstore.svg',
+    command: () => console.log('App Store clicked')
+  },
+  {
+    label: 'Safari',
+    icon: 'https://primefaces.org/cdn/primereact/images/dock/safari.svg',
+    command: () => console.log('Safari clicked')
+  },
+  {
+    label: 'Trash',
+    icon: 'https://primefaces.org/cdn/primereact/images/dock/trash.png',
+    command: () => console.log('Trash clicked')
+  }
+]);
+    return {dockItems,
+      breadcrumbItems,
+      timelineData,
+      filteredCities,
+      chipsValue: ['Chip 1', 'Chip 2', 'Chip 3'],
+      inputTextValue,
+      inputNumberValue,
+      inputMaskValue,
+      checkboxValue,
+      radioValue,
+      dropdownValue,
+      multiSelectValue,
+      textareaValue,
+      calendarValue,
+      sliderValue,
+      ratingValue,
+      colorValue,
+      toggleValue,
+      selectButtonValue,
+      dropdownOptions,
+      selectButtonOptions,
+      splitButtonItems,
+      speedDialItems,
+      tableData,
+      treeNodes,
+      treeTableNodes,
+      dialogVisible,
+      visibleSidebar,
+      showDialog,
+      toggle,
+      menuItems,
+      menubarItems,
+      tieredMenuItems,
+      contextMenuItems,
+      onContextMenu,
+      chartData,
+      chartOptions,
+      showToast,
+      carouselItems,
+      galleriaItems,
+      galleriaResponsiveOptions
+    }
+  }
 }
-const destinations = ref([
-  {
-    name: 'Hồ Chí Minh',
-    description: 'Thành phố sôi động và hiện đại nhất Việt Nam',
-    rooms: 15546,
-    image: 'https://pix6.agoda.net/geo/city/13170/1_13170_02.jpg?ca=6&ce=1&s=375x&ar=1x1',
-  },
-  {
-    name: 'Hà Nội',
-    description: 'Thủ đô ngàn năm văn hiến',
-    rooms: 10744,
-    image: 'https://pix6.agoda.net/geo/city/2758/065f4f2c9fa263611ab65239ecbeaff7.jpg?ce=0&s=375x&ar=1x1',
-  },
-  {
-    name: 'Vũng Tàu',
-    description: 'Điểm nghỉ dưỡng ven biển lý tưởng',
-    rooms: 6329,
-    image: 'https://pix6.agoda.net/geo/city/17190/1_17190_02.jpg?ca=6&ce=1&s=375x&ar=1x1',
-  },
-  {
-    name: 'Đà Nẵng',
-    description: 'Thành phố của những cây cầu và biển xanh',
-    rooms: 5534,
-    image: 'https://pix6.agoda.net/geo/city/16440/1_16440_02.jpg?ca=6&ce=1&s=375x&ar=1x1',
-  },
-  {
-    name: 'Đà Lạt',
-    description: 'Thành phố ngàn hoa và khí hậu ôn đới',
-    rooms: 5165,
-    image: 'https://pix6.agoda.net/geo/city/15932/1_15932_02.jpg?ca=6&ce=1&s=375x&ar=1x1',
-  },
-]);
-
-const responsiveOptions = ref([
-  {
-    breakpoint: '1024px',
-    numVisible: 4,
-    numScroll: 1,
-  },
-  {
-    breakpoint: '768px',
-    numVisible: 2,
-    numScroll: 1,
-  },
-  {
-    breakpoint: '560px',
-    numVisible: 1,
-    numScroll: 1,
-  },
-]);
-
 </script>
 
 <style scoped>
-template{
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.showcase-item {
+  @apply bg-white p-4 rounded-lg shadow-md;
 }
-img{
-  width: 100%;
-  height: 20%;
-  position: absolute;
-  top: 0;
-  z-index: -1;
-}
-.container{
-  justify-content: center;
-  display: flex;
-  margin-top: 4%;
-  color: white;
-  font-size: 12px;
-}
-.nav1, .nav2 {
-  margin-top: 15px;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 5px;
-  padding: 10px 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-.nav1{
-  display: flex;
-  position: relative;
-  z-index: 1;
-  background-color: #fff;
-  width: 40%;
-  align-items: center;
-  justify-items: center;
-  margin: auto;
-}
-.nav2 {
-  position: relative;
-  background-color: #f5f5f5;
-  margin: auto;
-  top: -20px;
-  width: 60%;
-  height: 270px;
-  padding: 20px 40px;
-  border-radius: 10px;
-}
-.line1 {
-  margin-top: 2%;
-  display: flex;
-  gap: 10px;
-}
-.line1 div {
-  cursor: pointer;
-  border-radius: 20px;
-  padding: 5px 10px;
-  background-color: #fff;
-  border: solid 1px #a1a1a1;
-}
-.nav2 span{
-  position: absolute;
-  font-size: 30px;
-  left: 50px;
-  top: 34%;
-  cursor: pointer;
-}
-.nav2 input {
-  margin-top: 10px;
-  margin-bottom: 20px;
-  width: 100%;
-  padding: 20px;
-  padding-left: 60px;
-  border-radius: 5px;
-  font-size: 15px;
-  border: solid 1px #a1a1a1;
-}
-.search {
-  position: absolute;
-  width: 40%;
-  height: 50px;
-  border-radius: 10px;
-  border: none;
-  background-color: #4787ff;
-  color: #fff;
-  font-size: 20px;
-  left: 30%;
-  top: 86%;
-  cursor: pointer;
-}
-.line2 {
-  position: relative;
-  display: flex;
-  gap: 4%;
-}
-#datePicker {
-  width: 48%;
-  height: 59px;
-  left: 0%;
-  top: -5px;
-}
-#inputPerson {
-  height: 59px;
-  width: 48%;
-  top: -5px;
-  left: calc(54% - 20px);
-  font-size: 20px;
-}
-#person {
-  left: 0;
-  height: 59px;
-  width: 100%;
-  top: 1px;
-}
-ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
-  margin: 20px auto;
-  padding: 0;
-}
-a{
-  text-decoration: none;
-  color: black;
-}
-.attractive-destination{
-  width: 60%;
-  margin: auto;
-  margin-top: 100px;
-  height: 350px;
-}
-.promo-hotel{
-  width: 60%;
-  margin: auto;
-  margin-top: 10px;
-  height: 500px;
-}
-.relative-mx-auto img {
-  height: 200px;
-  width: 200px;
-  object-fit:cover;
-  border-radius: 10px;
-  margin-left: 25px;
-}
-
 </style>
+
